@@ -383,9 +383,7 @@ let NERDTreeShowHidden = 1
 " デフォルトでツリーを表示させる
 let g:nerdtree_tabs_open_on_console_startup=1
 
-"<C-e>でNERDTreeを起動する設定
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
-"-------------------------------------------------
+autocmd vimenter * NERDTree
 
 "--------------indent guideの設定-----------------
 set list listchars=tab:\¦\
