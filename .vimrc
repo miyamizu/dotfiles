@@ -42,7 +42,6 @@ set shiftwidth=2
 autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
 "============================================================
 
-
 "==================== 検索系============================
 "検索結果をハイライト
 set hlsearch
@@ -383,7 +382,8 @@ let NERDTreeShowHidden = 1
 " デフォルトでツリーを表示させる
 let g:nerdtree_tabs_open_on_console_startup=1
 
-autocmd vimenter * NERDTree
+"<C-e>でNERDTreeを起動する設定
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 "--------------indent guideの設定-----------------
 set list listchars=tab:\¦\
