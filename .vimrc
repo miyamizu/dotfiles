@@ -177,6 +177,20 @@ noremap k gk
 "==========================================================
 
 
+"==================マークダウンの設定===========================
+" [markdown] configure formatprg
+autocmd FileType markdown set formatprg=prettier\ --parser\ markdown
+
+" [markdown] format on save
+autocmd! BufWritePre *.md call s:mdfmt()
+function s:mdfmt()
+    let l:curw = winsaveview()
+    silent! exe "normal! a \<bs>\<esc>" | undojoin |
+        \ exe "normal gggqG"
+    call winrestview(l:curw)
+  endfunction
+"==========================================================
+
 "==================tab移動の設定===========================
 "---t1,t2...でタブ移動,ttでタブ新規作成,tqでタブ閉じ-------
 " Anywhere SID.
@@ -281,6 +295,20 @@ call dein#add('vim-scripts/vim-auto-save')
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
+"VimでDockerを操作
+call dein#add('skanehira/docker.vim')
+" open browser command, deafult is 'open'
+let g:docker_open_browser_cmd = 'open'
+
+" split temrinal windows, can use vert or tab, etc...
+" see :h vert
+let g:docker_terminal_open = 'bo'
+
+" check plugin's version when plugin loading.
+" default is checking.
+" If you not want to check, please set 0 to this option.
+let g:docker_plugin_version_check = 1
+
 "保存時に自動でctagsが実行される
 call dein#add('soramugi/auto-ctags.vim')
 let g:auto_ctags = 1
@@ -358,6 +386,20 @@ call dein#add('leafgarland/typescript-vim')
 
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
+
+" Deniteの設定
+nnoremap [denite] <Nop>
+nmap <C-u> [denite]
+
+" -buffer-name=
+nnoremap <silent> [denite]g  :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
+
+" Denite grep検索結果を再表示する
+nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+" resumeした検索結果の次の行の結果へ飛ぶ
+nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+" resumeした検索結果の前の行の結果へ飛ぶ
+nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
 "--------------------------------------------------
 
 "--------------EasyMotionの設定-------------------
