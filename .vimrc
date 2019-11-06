@@ -295,20 +295,6 @@ call dein#add('vim-scripts/vim-auto-save')
 let g:auto_save = 1
 let g:auto_save_in_insert_mode = 0
 
-"VimでDockerを操作
-call dein#add('skanehira/docker.vim')
-" open browser command, deafult is 'open'
-let g:docker_open_browser_cmd = 'open'
-
-" split temrinal windows, can use vert or tab, etc...
-" see :h vert
-let g:docker_terminal_open = 'bo'
-
-" check plugin's version when plugin loading.
-" default is checking.
-" If you not want to check, please set 0 to this option.
-let g:docker_plugin_version_check = 1
-
 "保存時に自動でctagsが実行される
 call dein#add('soramugi/auto-ctags.vim')
 let g:auto_ctags = 1
