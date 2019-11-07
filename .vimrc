@@ -16,8 +16,6 @@ set fileformats=unix,dos,mac
 
 " □や○文字が崩れる問題を解決
 set ambiwidth=double
-"=====================================================
-
 
 "===============タブやインデントに関する設定===============
 "タブ入力を複数の空白文字に置き換える
@@ -32,41 +30,21 @@ set softtabstop=2
 "改行時に前の行のインデントを継続させる
 set autoindent
 
-"改行時に前の行の構文をチェックし次の行のインデントを増減させる
-set smartindent
-
 "smartindentで増減する幅を規定
 set shiftwidth=2
 
 " インデントを設定
 autocmd FileType coffee     setlocal sw=2 sts=2 ts=2 et
-"============================================================
 
 "==================== 検索系============================
 "検索結果をハイライト
 set hlsearch
-"ESC二回押しでハイライトを消す
-nnoremap <ESC><ESC> :nohlsearch<CR>
 
 "検索結果に大文字小文字を区別しない
 set ignorecase
 
 "検索文字に大文字が含まれていたら、大文字小文字を区別する
 set smartcase
-
-"----------検索対象から除外するファイルを指定---------
-let Grep_Skip_Dirs = '.svn .git'  "無視するディレクトリ
-let Grep_Default_Options = '-I'   "バイナルファイルがgrepしない
-let Grep_Skip_Files = '*.bak *~'  "バックアップファイルを無視する
-"-----------------------------------------------------
-
-":cn,:cpを、[q、]q にバインディング
-nnoremap [q :cprevious<CR>   " 前へ
-nnoremap ]q :cnext<CR>       " 次へ
-nnoremap [Q :<C-u>cfirst<CR> " 最初へ
-nnoremap ]Q :<C-u>clast<CR>  " 最後へ
-"======================================================
-
 
 "====================syntax系=========================
 syntax enable
@@ -75,8 +53,6 @@ colorscheme desert
 
 "シンタックスハイライト有効
 syntax on
-"=======================================================
-
 
 "======================カーソル系========================
 "カーソルの左右移動で行末から次の行の行頭への移動が可能になる
@@ -87,12 +63,6 @@ set cursorline
 
 "行番号を表示する
 set number
-
-"INSERTモードのときだけ横線解除
-augroup set_cursorline
-  autocmd!
-  autocmd InsertEnter,InsertLeave * set cursorline!  "redraw!
-augroup END
 
 "全角スペースを視覚化
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=#666666
@@ -106,14 +76,12 @@ set ruler
 
 " backspace使用できるように
 set backspace=indent,eol,start
-"========================================================
-
 
 "=======================コピー&ペースト系=================
 " クリップボード for NeoVim
 set clipboard+=unnamedplus
 
-"----------コピーした際に自動インデントでズレない設定----
+"コピーした際に自動インデントでズレない設定
 if &term =~ "xterm"
     let &t_SI .= "\e[?2004h"
     let &t_EI .= "\e[?2004l"
@@ -129,18 +97,8 @@ endif
 
 " ペーストモードを自動で抜ける設定
 autocmd InsertLeave * set nopaste
-"--------------------------------------------------------
-
-"==========================================================
-
 
 "======================ファイル操作系=====================
-"VimFilter起動時からファイル操作が出来る設定(切り替えはgs)
-let g:vimfiler_as_default_explorer = 1
-"=========================================================
-
-
-"====================その他設定===========================
 "自動でswpファイル作らない
 set noswapfile
 
@@ -152,30 +110,6 @@ set history=5000
 
 " vimにcoffeeファイルタイプを認識させる
 au BufRead,BufNewFile,BufReadPre *.coffee   set filetype=coffee
-
-"Ctags
-set tags=./.tags;
-"==========================================================
-
-
-"=================独自キーバインド=========================
-"jjでインサートモードを抜ける
-inoremap <silent> jj <ESC>
-
-"qで終了
-nmap q :q<CR>
-
-"Shift + hで行の先頭
-noremap <S-h>   ^
-
-"Shift + lで行の末尾
-noremap <S-l>   $
-
-"上下移動を表示行ベースに
-noremap j gj
-noremap k gk
-"==========================================================
-
 
 "==================マークダウンの設定===========================
 " [markdown] configure formatprg
@@ -189,10 +123,8 @@ function s:mdfmt()
         \ exe "normal gggqG"
     call winrestview(l:curw)
   endfunction
-"==========================================================
 
 "==================tab移動の設定===========================
-"---t1,t2...でタブ移動,ttでタブ新規作成,tqでタブ閉じ-------
 " Anywhere SID.
 function! s:SID_PREFIX()
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
@@ -238,8 +170,6 @@ map <silent> [Tag]n :tabnext<CR>
 " tn 次のタブ
 map <silent> [Tag]p :tabprevious<CR>
 " tp 前のタブ
-"==============================================================
-
 
 "====================== dein ===========================
 " deinで管理するディレクトリを指定
@@ -252,12 +182,9 @@ call dein#begin(expand('~/.vim/dein'))
 call dein#add('Shougo/dein.vim')
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 
-"---------deinで管理するプラグイン達----------
+"deinで管理するプラグイン達
 "カラースキーム
 call dein#add('tomasr/molokai')
-
-"ディレクトリツリーの表示
-call dein#add('scrooloose/nerdtree')
 
 "coffeescriptを認識させる
 call dein#add('kchmck/vim-coffee-script')
@@ -290,16 +217,6 @@ call dein#add('tpope/vim-surround')
 call dein#add('w0rp/ale')
 let g:ale_sign_column_always = 1
 
-"自動保存
-call dein#add('vim-scripts/vim-auto-save')
-let g:auto_save = 1
-let g:auto_save_in_insert_mode = 0
-
-"保存時に自動でctagsが実行される
-call dein#add('soramugi/auto-ctags.vim')
-let g:auto_ctags = 1
-nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-
 "tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
 "tagsジャンプで Ctrl+[ で新しいタブを開いてジャンプに
@@ -321,11 +238,6 @@ call dein#add('lambdalisue/gina.vim')
 "brにGitHubの該当行を開くコマンドをキーマッピング
 vnoremap br :Gina browse :<cr>
 
-" ファイル検索(fzf)
-set rtp+=/usr/local/opt/fzf
-call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-
 "変更行の左端に記号表示
 call dein#add('airblade/vim-gitgutter')
 
@@ -344,18 +256,6 @@ call dein#add('osyo-manga/vim-anzu')
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
-"endを自動で入力してくれる
-call dein#add('tpope/vim-endwise')
-
-"カッコを七色にする
-call dein#add('luochen1990/rainbow')
-let g:rainbow_active = 1 "0 if you want to enable it later via :RainbowToggle
-
-" v連打で選択範囲を変える[1文字→単語→段落](<C-v>で元に戻す)
-call dein#add('terryma/vim-expand-region')
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
 " Vueファイルのシンタックスハイライト
 call dein#add('posva/vim-vue')
 
@@ -364,16 +264,13 @@ call dein#add('maxmellon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
 call dein#add('maxmellon/vim-jsx-pretty')
 
-" :GitMessenger でコミットを見れる
-call dein#add('rhysd/git-messenger.vim')
-
 " TypeScriptのシンタックスハイライト
 call dein#add('leafgarland/typescript-vim')
 
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
 
-" Deniteの設定
+"--------------Deniteの設定-------------------
 nnoremap [denite] <Nop>
 nmap <C-u> [denite]
 
@@ -386,14 +283,10 @@ nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-deni
 nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
 " resumeした検索結果の前の行の結果へ飛ぶ
 nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
-"--------------------------------------------------
 
 "--------------EasyMotionの設定-------------------
 map <Leader> <Plug>(easymotion-prefix)
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-"sを押したら2文字サーチに入るよう設定
-nmap s <Plug>(easymotion-overwin-f2)
 
 "SmartCaseで検索する
 let g:EasyMotion_smartcase = 1
@@ -401,23 +294,11 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
-"-------------------------------------------------
-
-"---------------NERDTreeの設定---------------------
-" 隠しファイルをデフォルトで表示させる
-let NERDTreeShowHidden = 1
-
-" デフォルトでツリーを表示させる
-let g:nerdtree_tabs_open_on_console_startup=1
-
-"<C-e>でNERDTreeを起動する設定
-nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 "--------------indent guideの設定-----------------
 set list listchars=tab:\¦\
 let g:indentLine_color_term = 111
 let g:indentLine_color_gui = '#708090'
-"-------------------------------------------------
 
 "-----------------補完の設定--------------------
 let g:deoplete#enable_at_startup = 1
@@ -442,22 +323,10 @@ inoremap <silent><expr> <TAB>
 highlight Pmenu ctermbg=6
 highlight PmenuSel ctermbg=3
 highlight PMenuSbar ctermbg=0
-"vim-lspを入れたら動作がかなり遅くなってしまったので一旦コメントアウト
-" call dein#add('autozimu/LanguageClient-neovim', {
-"     \ 'branch': 'next',
-"     \ 'do': 'bash install.sh',
-"     \ })
-" let g:LanguageClient_serverCommands = {
-"       \ 'ruby': ['solargraph', 'stdio'],
-"       \}
-" call deoplete#custom#var('omni', 'input_patterns', {
-"       \ 'ruby': ['[^. *\t]\.\w*', '[a-zA-Z_]\w*::'],
-"       \})
 
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
-"------------------------------------------------------
 
 "----lightline(ステータスの表示の設定/色の変更とVimFiler時にパスが出るようにしてる)----
 let g:lightline = {
@@ -518,37 +387,11 @@ endfunction
 function! LightlineMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
-"------------------------------------------------------
 
 "--------------- ステータスラインの設定-------------------
 set laststatus=2 " ステータスラインを常に表示
 set showmode " 現在のモードを表示
 set showcmd " 打ったコマンドをステータスラインの下に表示
-"---------------------------------------------------------
-"
-"--------------- ファイル検索(fzf)の設定-------------------
-nnoremap <C-p> :FZFFileList<CR>
-"ノーマルモードでfを押すとfzfが起動するキーマップ
-nmap f :FZFFileList<CR>
-command! FZFFileList call fzf#run({
-            \ 'source': 'find . -type d -name .git -prune -o ! -name .DS_Store',
-            \ 'sink': 'e'})
-" fzfからファイルにジャンプできるようにする
-let g:fzf_buffers_jump = 1
-
-" ファイル検索にripgrepを利用(?でプレビュー表示)
-command! -bang -nargs=* Rg
-\ call fzf#vim#grep(
-\ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
-\ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
-\ : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
-\ <bang>0)
-" Ctrl + gで文字列検索起動
-nnoremap <C-g> :Rg<CR>
-" Ctrl + oで新しいタブで開く
-let g:fzf_action = {
-\ 'ctrl-o': 'tab split'
-\ }
 "---------------------------------------------------------
 
 call dein#end()
@@ -560,4 +403,3 @@ filetype plugin indent on
 if dein#check_install()
   call dein#install()
 endif
-"===========================================================
