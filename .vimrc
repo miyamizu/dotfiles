@@ -156,11 +156,6 @@ set showtabline=2 " 常にタブラインを表示
 " The prefix key.
 nnoremap    [Tag]   <Nop>
 nmap    t [Tag]
-" Tab jump
-for n in range(1, 9)
-  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
-endfor
-" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
 
 map <silent> [Tag]t :tablast <bar> tabnew<CR>
 " tt 新しいタブを一番右に作る
@@ -220,19 +215,6 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('w0rp/ale')
 let g:ale_sign_column_always = 1
 
-"tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]>
-"tagsジャンプで Ctrl+[ で新しいタブを開いてジャンプに
-nnoremap <C-[> :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
-
-"taglist
-call dein#add('vim-scripts/taglist.vim')
-let Tlist_Show_One_File = 1
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-let Tlist_Auto_Update = 1
-let Tlist_File_Fold_Auto_Close = 1
-
 "開いているファイルのコードを実行して結果を画面分割で出力できる
 call dein#add('thinca/vim-quickrun')
 
@@ -272,20 +254,6 @@ call dein#add('leafgarland/typescript-vim')
 
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
-
-"--------------Deniteの設定-------------------
-nnoremap [denite] <Nop>
-nmap <C-u> [denite]
-
-" -buffer-name=
-nnoremap <silent> [denite]g  :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
-
-" Denite grep検索結果を再表示する
-nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
-" resumeした検索結果の次の行の結果へ飛ぶ
-nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
-" resumeした検索結果の前の行の結果へ飛ぶ
-nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
 
 "---------------NERDTreeの設定---------------------
 " 隠しファイルをデフォルトで表示させる
