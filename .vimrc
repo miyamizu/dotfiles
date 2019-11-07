@@ -213,6 +213,9 @@ call dein#add('tomtom/tcomment_vim')
 "指定範囲を楽に囲む 選択範囲を、S＋囲むもの
 call dein#add('tpope/vim-surround')
 
+"ディレクトリツリーの表示
+call dein#add('scrooloose/nerdtree')
+
 "rubocopの非同期実行
 call dein#add('w0rp/ale')
 let g:ale_sign_column_always = 1
@@ -283,6 +286,16 @@ nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-deni
 nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
 " resumeした検索結果の前の行の結果へ飛ぶ
 nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+
+"---------------NERDTreeの設定---------------------
+" 隠しファイルをデフォルトで表示させる
+let NERDTreeShowHidden = 1
+
+" デフォルトでツリーを表示させる
+let g:nerdtree_tabs_open_on_console_startup=1
+
+"<C-e>でNERDTreeを起動する設定
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 "--------------EasyMotionの設定-------------------
 map <Leader> <Plug>(easymotion-prefix)
