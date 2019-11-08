@@ -255,6 +255,10 @@ call dein#add('leafgarland/typescript-vim')
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
 
+call dein#add('Shougo/denite.nvim')
+
+autocmd FileType denite call s:denite_settings() 
+
 "---------------NERDTreeの設定---------------------
 " 隠しファイルをデフォルトで表示させる
 let NERDTreeShowHidden = 1
@@ -264,6 +268,20 @@ let g:nerdtree_tabs_open_on_console_startup=1
 
 "<C-e>でNERDTreeを起動する設定
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+
+"--------------Deniteの設定-------------------
+nnoremap [denite] <Nop>
+nmap <C-m> [denite]
+
+" -buffer-name=
+nnoremap <silent> [denite]g  :<C-u>Denite grep -buffer-name=search-buffer-denite<CR>
+
+" Denite grep検索結果を再表示する
+nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-denite<CR>
+" resumeした検索結果の次の行の結果へ飛ぶ
+nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
+" resumeした検索結果の前の行の結果へ飛ぶ
+nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
 
 "--------------EasyMotionの設定-------------------
 map <Leader> <Plug>(easymotion-prefix)
@@ -384,3 +402,29 @@ filetype plugin indent on
 if dein#check_install()
   call dein#install()
 endif
+
+if executable('rg')
+  " For ripgrep.
+  call denite#custom#var('file/rec', 'command', ['rg', '--files', '--color', 'never'])
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep', '--no-heading'])
+  call denite#custom#var('grep', 'recursive_opts', [])
+  call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+  call denite#custom#var('grep', 'separator', ['--'])
+  call denite#custom#var('grep', 'final_opts', [])
+endif
+
+function! s:denite_settings() abort
+  nnoremap <silent><buffer><expr><nowait> <CR> denite#do_map('do_action')
+  nnoremap <silent><buffer><expr><nowait> <TAB> denite#do_map('choose_action')
+  nnoremap <silent><buffer><expr><nowait> <ESC> denite#do_map('quit')
+  nnoremap <silent><buffer><expr><nowait> q denite#do_map('quit')
+  nnoremap <silent><buffer><expr><nowait> <Space> denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr><nowait> n denite#do_map('quick_move')
+  nnoremap <silent><buffer><expr><nowait> i denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr><nowait> p denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr><nowait> t denite#do_map('do_action', 'tabopen')
+  nnoremap <silent><buffer><expr><nowait> v denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr><nowait> s denite#do_map('do_action', 'split')
+  nnoremap <silent><buffer><expr><nowait> <C-h> denite#do_map('restore_sources')
+endfunction
