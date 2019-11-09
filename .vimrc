@@ -215,6 +215,11 @@ call dein#add('scrooloose/nerdtree')
 call dein#add('w0rp/ale')
 let g:ale_sign_column_always = 1
 
+"自動保存
+call dein#add('vim-scripts/vim-auto-save')
+let g:auto_save = 1
+let g:auto_save_in_insert_mode = 0
+
 "開いているファイルのコードを実行して結果を画面分割で出力できる
 call dein#add('thinca/vim-quickrun')
 
