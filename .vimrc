@@ -273,6 +273,7 @@ let g:nerdtree_tabs_open_on_console_startup=1
 
 "<C-e>でNERDTreeを起動する設定
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+map m :NERDTreeFind
 
 "--------------Deniteの設定-------------------
 nnoremap [denite] <Nop>
