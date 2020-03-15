@@ -99,6 +99,9 @@ endif
 autocmd InsertLeave * set nopaste
 
 "======================ファイル操作系=====================
+"VimFilter起動時からファイル操作が出来る設定(切り替えはgs)
+let g:vimfiler_as_default_explorer = 1
+
 "自動でswpファイル作らない
 set noswapfile
 
@@ -172,6 +175,7 @@ set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
 
 " Required:
 call dein#begin(expand('~/.vim/dein'))
+call dein#add('vim/killersheep')
 
 " dein自体をdeinで管理
 call dein#add('Shougo/dein.vim')
@@ -211,7 +215,8 @@ call dein#add('tpope/vim-surround')
 "ディレクトリツリーの表示
 call dein#add('scrooloose/nerdtree')
 
-"rubocopの非同期実行
+" rubocopの非同期実行
+" 各言語について色々入ってる
 call dein#add('w0rp/ale')
 let g:ale_sign_column_always = 1
 
@@ -234,6 +239,9 @@ call dein#add('airblade/vim-gitgutter')
 "ファイル操作用
 call dein#add('Shougo/vimfiler')
 
+" TypeScriptのシンタックスハイライト
+call dein#add('leafgarland/typescript-vim')
+
 "補完
 call dein#add('Shougo/deoplete.nvim')
 if !has('nvim')
@@ -246,6 +254,9 @@ call dein#add('osyo-manga/vim-anzu')
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 
+" ファイル検索
+call dein#add('ctrlpvim/ctrlp.vim')
+
 " Vueファイルのシンタックスハイライト
 call dein#add('posva/vim-vue')
 
@@ -254,15 +265,16 @@ call dein#add('maxmellon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
 call dein#add('maxmellon/vim-jsx-pretty')
 
-" TypeScriptのシンタックスハイライト
-call dein#add('leafgarland/typescript-vim')
-
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
 
+" deniteのインストール
 call dein#add('Shougo/denite.nvim')
 
-autocmd FileType denite call s:denite_settings() 
+" file_mruで使うために入れてる
+call dein#add('Shougo/neomru.vim')
+
+autocmd FileType denite call s:denite_settings()
 
 "---------------NERDTreeの設定---------------------
 " 隠しファイルをデフォルトで表示させる
@@ -273,7 +285,7 @@ let g:nerdtree_tabs_open_on_console_startup=1
 
 "<C-e>でNERDTreeを起動する設定
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
-map m :NERDTreeFind
+map z :NERDTreeFind
 
 "--------------Deniteの設定-------------------
 nnoremap [denite] <Nop>
@@ -288,6 +300,8 @@ nnoremap <silent> [denite]r :<C-u>Denite -resume -buffer-name=search-buffer-deni
 nnoremap <silent> [denite]n :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=+1 -immediately<CR>
 " resumeした検索結果の前の行の結果へ飛ぶ
 nnoremap <silent> [denite]p :<C-u>Denite -resume -buffer-name=search-buffer-denite -select=-1 -immediately<CR>
+"最近使用したファイル一覧
+nnoremap <silent> [denite]m :<C-u>Denite -direction=topleft file_mru<CR>
 
 "--------------EasyMotionの設定-------------------
 map <Leader> <Plug>(easymotion-prefix)
