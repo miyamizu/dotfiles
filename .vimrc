@@ -169,6 +169,13 @@ map <silent> [Tag]n :tabnext<CR>
 map <silent> [Tag]p :tabprevious<CR>
 " tp 前のタブ
 
+"==================永続Undo===========================
+set undofile
+if !isdirectory(expand("$HOME/.vim/undodir"))
+  call mkdir(expand("$HOME/.vim/ undodir"), "p")
+endif
+set undodir=$HOME/.vim/undodir
+
 "====================== dein ===========================
 " deinで管理するディレクトリを指定
 set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
