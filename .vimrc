@@ -270,7 +270,6 @@ call dein#add('posva/vim-vue')
 " jsxのシンタックスハイライト
 call dein#add('maxmellon/vim-jsx-pretty')
 call dein#add('pangloss/vim-javascript')
-call dein#add('maxmellon/vim-jsx-pretty')
 
 " EditorConfigの設定
 call dein#add('editorconfig/editorconfig-vim')
@@ -327,15 +326,15 @@ let g:indentLine_color_term = 111
 let g:indentLine_color_gui = '#708090'
 
 "-----------------補完の設定--------------------
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 0
-let g:deoplete#auto_complete_start_length = 1
-let g:deoplete#enable_camel_case = 0
-let g:deoplete#enable_ignore_case = 0
-let g:deoplete#enable_refresh_always = 0
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#file#enable_buffer_path = 1
-let g:deoplete#max_list = 10000
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#auto_complete_delay = 0
+" let g:deoplete#auto_complete_start_length = 1
+" let g:deoplete#enable_camel_case = 0
+" let g:deoplete#enable_ignore_case = 0
+" let g:deoplete#enable_refresh_always = 0
+" let g:deoplete#enable_smart_case = 1
+" let g:deoplete#enable_buffer_path = 1
+" let g:deoplete#max_list = 10000
 " 補完の操作
 function! s:check_back_space() abort "{{{
   let col = col('.') - 1
