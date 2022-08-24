@@ -1,3 +1,4 @@
+
 "===============文字コードに関する設定================
 "ファイル読み込み時の文字コードの設定
 set encoding=utf-8
@@ -178,7 +179,10 @@ set undodir=$HOME/.vim/undodir
 
 "====================== dein ===========================
 " deinで管理するディレクトリを指定
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+" https://dezanari.com/deinvim-install/
+" set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+
 
 " Required:
 call dein#begin(expand('~/.vim/dein'))
