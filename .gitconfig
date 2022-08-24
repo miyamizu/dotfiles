@@ -1,0 +1,23 @@
+[core]
+    excludesfile = /Users/maple/.gitignore_global
+    editor = nvim 
+[difftool "sourcetree"]
+    cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+    path =
+[mergetool "sourcetree"]
+    cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+    trustExitCode = true
+[user]
+    name = miyazaki
+    email = kattyan.08ms@gmail.com
+[alias]
+    st = status
+    co = checkout
+    br = branch
+    cm = commit
+    df = diff
+  gr = grep
+  p = !git push origin `git rev-parse --abbrev-ref HEAD`
+  pu = !git pull origin `git rev-parse --abbrev-ref HEAD`
+  ci = commit -v
+  dmb = !git branch --merged | grep -vE '^\\*|master$|develop$' | xargs -I % git branch -d %
